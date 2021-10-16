@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="dist/css/swiper-bundle.min.css">-->
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.js"> </script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"> </script>
+	<style>
+		* {
+	margin: 0;
+}
+.apple-retail {
+	margin: 30px 0;
+}
+.swiper-slide {
+	text-align: center;
+    padding: 0 calc((100vw - 816px) * .15);
+	width: 816px;
+}
+.inner figure {
+	width: 100%;
+}
+.inner figure img {
+	width: 100%;
+	border-radius: 6px;
+}
+.gallery-item-desc {
+	width: 80%;
+	text-align: left;
+	display: inline-block;
+	padding-top: 46px;
+	opacity: 0;
+	transition-duration: 1.2s;
+}
+.init .gallery-item-desc {
+	opacity: 1;
+}
+.gallery-item-desc h3 {
+	line-height: 1.16667;
+	font-weight: 600;
+	letter-spacing: .009em;
+	color: #111;
+	font-size: 20px;
+}
+.gallery-item-desc p {
+	margin-top: 1em;
+	color: #333;
+	font-size: 15px;
+}
+.swiper-slide-prev .gallery-item-desc {
+	transform: translateX(-70px);
+}
+.swiper-slide-next .gallery-item-desc {
+	transform: translateX(70px);
+}
+.swiper-slide-active .gallery-item-desc {
+	opacity: 1;
+	transform: translateX(0);
+}
+@media only screen and (max-width: 1068px) {
+.swiper-slide {
+    padding:0 calc((100vw - 576px) * .15);
+	width: 576px;
+}
+.gallery-item-desc {
+	padding-top: 41px;
+}
+}
+@media only screen and (max-width: 735px) {
+.swiper-slide {
+	transform: scale(.9);
+	padding: 0;
+	width: 85vw;
+	margin: 0 0;
+	min-width: 272px;
+}
+.swiper-slide-active {
+	transform: scale(1);
+}
+.gallery-item-desc {
+	padding-top: 26px;
+	width: 90%;
+}
+}
+.swiper-button-next, .swiper-button-prev {
+	top: 40%;
+	background-color: rgba(210,210,210,.6);
+	background-size: 15px 15px;
+	border-radius: 50%;
+	width: 52px;
+	height: 52px;
+	transition: all .5s;
+	outline: none;
+	opacity: 0;
+}
+.mouse-hover .swiper-button-next, .mouse-hover .swiper-button-prev {
+	opacity: 1;
+}
+.swiper-button-next:hover, .swiper-button-prev:hover {
+	background-color: rgba(210,210,210,.8);
+}
+.swiper-button-next {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+	right: 20px;
+}
+.swiper-button-prev {
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+	left: 20px;
+}
+.swiper-container .swiper-button-next.swiper-button-disabled, .swiper-container .swiper-button-prev.swiper-button-disabled {
+	opacity: 0;
+}
+	</style>
+</head>
+<body>
+<!-- 返回按钮 -->
+	<div style="position: relative; top: 20px; left: 10px;">
+		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 40px; color: black"></span></a>
+	</div>
+<div class="apple-retail">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide init">
+        <div class="inner">
+          <figure><img src="../image/event_1.jpg"></figure>
+          <div class="gallery-item-desc">
+            <h3 class="typography-label">政策扶持</h3>
+            <p class="typography-body">早在五年前，国务院就发布了《“十三五”加快残疾人小康进程规划纲要》的通知，而在今年的 7 月 8 日，国务院又发布了《“十四五”残疾人保障和发展规划》，明确规定了要在残
+              疾人的民生、就业创业、公共服务质量上做好保障。
+              并且，政府一直贯彻着税收优惠、减免规费等系列针对残疾人的帮扶政策。</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="inner">
+          <figure><img src="../image/event_2.jpg"></figure>
+          <div class="gallery-item-desc">
+            <h3 class="typography-label">康复</h3>
+            <p class="typography-body">残联以贫困残疾人为重点，持续组织实施残疾人精准康复服务行动，1077.7万持证残疾人及残疾儿童得到基本康复服务。</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="inner">
+          <figure><img src="../image/event_3.jpg"></figure>
+          <div class="gallery-item-desc">
+            <h3 class="typography-label">教育</h3>
+            <p class="typography-body">残联开展全国残联系统康复人才实
+              名制培训。截至2020年底，全国有残疾人康复机构10440个，其中残联系统康复机构2550个。</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="inner">
+          <figure><img src="../image/event_4.jpg"></figure>
+          <div class="gallery-item-desc">
+            <h3 class="typography-label">就业</h3>
+            <p class="typography-body">2020 年城乡持证残疾人新增就业38.1万人，其中，城镇新增就业13.2万
+              人，农村新增就业24.9万人；城乡新增残疾人实名培训38.2万人。</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="inner">
+          <figure><img src="../image/event_5.jpg"></figure>
+          <div class="gallery-item-desc">
+            <h3 class="typography-label">社会保障</h3>
+            <p class="typography-body">
+            至2020年底，残疾居民参加城乡社会养老保险人数2699.2万；680.1万60岁以下参保重度
+              残疾人中，657.9万享受了参保个人缴费资助政策，占比96.7%。303.7万非重度残疾人享受
+              了个人缴费资助政策。1140.5万人领取养老金。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <!--左箭头-->
+    <div class="swiper-button-next"></div>
+    <!--右箭头-->
+  </div>
+</div>
+<!-- Swiper JS -->
+<!--<script src="js/swiper.min.js"></script>-->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        autoplay:true,
+    	speed: 700,
+    	slidesPerView: 'auto',
+    	centeredSlides: true,
+    	on: {
+    		init: function() {
+    			this.slides.removeClass('init');
+    		},
+    	},
+    	navigation: {
+    		nextEl: '.swiper-button-next',
+    		prevEl: '.swiper-button-prev',
+    	},
+
+    });
+    swiper.$el.parent('.apple-retail')[0].onmouseover = function() {
+    	swiper.$el.addClass('mouse-hover');
+    };
+    swiper.$el.parent('.apple-retail')[0].onmouseout = function() {
+    	swiper.$el.removeClass('mouse-hover');
+    };
+</script>
+</body>
+</html>

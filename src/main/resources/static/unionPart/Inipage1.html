@@ -1,0 +1,303 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>残联界面</title>
+    <link href="../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ced7379929.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-image: radial-gradient(circle at center, #899Dc4, #495D84);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at bottom, #1b2735, #090a0f);
+            font-weight: 300;
+        }
+
+        .all {
+            display: flex;
+            -webkit-perspective: 10px;
+            perspective: 10px;
+            -webkit-transform: perspective(300px) rotateX(20deg);
+            transform: perspective(300px) rotateX(20deg);
+            will-change: perspective;
+            -webkit-perspective-origin: center center;
+            perspective-origin: center center;
+            transition: all 1.3s ease-out;
+            justify-content: center;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        .all:hover {
+            -webkit-perspective: 1000px;
+            perspective: 1000px;
+            transition: all 1.3s ease-in;
+            -webkit-transform: perspective(10000px) rotateX(0deg);
+            transform: perspective(10000px) rotateX(0deg);
+        }
+
+        .all:hover .text {
+            opacity: 1;
+        }
+
+        .all:hover > div {
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        .all:hover .explainer {
+            opacity: 0;
+        }
+
+        .left, .center, .right, .lefter, .righter {
+            width: 200px;
+            height: 150px;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            border-radius: 10px;
+            border: 1px solid #fff;
+            box-shadow: 0 0 20px 5px rgba(100, 100, 255, 0.4);
+            opacity: 0;
+            transition: all .3s ease;
+            transition-delay: 1s;
+            position: relative;
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: #58d;
+            cursor: pointer;
+            background-blend-mode: color-burn;
+        }
+
+        .left:hover, .center:hover, .right:hover, .lefter:hover, .righter:hover {
+            box-shadow: 0 0 30px 10px rgba(100, 100, 255, 0.6);
+            background-color: #ccf;
+        }
+
+        .text {
+            -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all .3s ease;
+            bottom: 0;
+            left: 5px;
+            position: absolute;
+            will-change: transform;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(100, 100, 255, 0.6);
+        }
+
+        .lefter {
+            -webkit-transform: translateX(-60px) translateZ(-50px) rotateY(-10deg);
+            transform: translateX(-60px) translateZ(-50px) rotateY(-10deg);
+            background-image: url(../image/organization-512.png);
+        }
+
+        .left {
+            -webkit-transform: translateX(-30px) translateZ(-25px) rotateY(-5deg);
+            transform: translateX(-30px) translateZ(-25px) rotateY(-5deg);
+            background-image: url(../image/creative_draw-512.png);
+        }
+
+        .center {
+            opacity: 1;
+            background-image: url(../image/app_window-512.png);
+        }
+
+        .right {
+            -webkit-transform: translateX(30px) translateZ(-25px) rotateY(5deg);
+            transform: translateX(30px) translateZ(-25px) rotateY(5deg);
+            background-image: url(../image/cloud_weather-512.png);
+        }
+
+        .righter {
+            -webkit-transform: translateX(60px) translateZ(-50px) rotateY(10deg);
+            transform: translateX(60px) translateZ(-50px) rotateY(10deg);
+            background-image: url(../image/search-512.png);
+        }
+
+        .explainer {
+            font-weight: 300;
+            font-size: 2rem;
+            color: #fff;
+            transition: all .6s ease;
+            width: 100%;
+            height: 100%;
+            background-color: #303050;
+            background-image: radial-gradient(circle at center top, #cce, #33a);
+            border-radius: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ref {
+            background-color: #000;
+            background-image: linear-gradient(to bottom, #d80, #c00);
+            border-radius: 3px;
+            padding: 7px 10px;
+            position: absolute;
+            font-size: 16px;
+            bottom: 10px;
+            right: 10px;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .ref::first-letter {
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+<!-- 我的资料 -->
+<div class="modal fade" id="myInformation" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 30%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">我的资料</h4>
+            </div>
+            <div class="modal-body">
+                <div style="position: relative; left: 40px;">
+                    用户：<b>深圳市残疾人联合会</b><br><br>
+                    失效时间：<b>2017-02-14 10:10:10</b><br><br>
+                    允许访问IP：<b>127.0.0.1,192.168.100.2</b>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 修改密码的模态窗口 -->
+<div class="modal fade" id="editPwdModal" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="oldPwd" class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="oldPwd" style="width: 200%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPwd" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="newPwd" style="width: 200%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPwd" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="confirmPwd" style="width: 200%;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="window.location.href='../login.html';">更新
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 退出系统的模态窗口 -->
+<div class="modal fade" id="exitModal" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 30%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">离开</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确定要退出系统吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="window.location.href='../login.html';">确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway:200">
+<!-- 顶部 -->
+<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;position:absolute;top:0;left:0">
+    <div style="position: absolute; top: 10px; left: 5px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">
+        <a href="../StartPoint1.html">WePromise</a><span style="font-size:14px;color:white">&nbsp;&nbsp;Created by Team AndOne</span>
+    </div>
+    <div style="position: absolute; top: 15px; right: 15px;">
+        <ul>
+            <li class="dropdown user-dropdown">
+                <a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle"
+                   data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>深圳市残疾人联合会<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="../settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
+                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span
+                            class="glyphicon glyphicon-file"></span> 我的资料</a></li>
+                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span
+                            class="glyphicon glyphicon-edit"></span> 修改密码</a></li>
+                    <li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span
+                            class="glyphicon glyphicon-off"></span> 退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="all">
+
+    <div class="lefter" onclick="location='userInfo.html'">
+        <div class="text">残疾人信息管理</div>
+    </div>
+    <div class="left" onclick="location='orgInfo.html'">
+        <div class="text">第三方组织信息管理</div>
+    </div>
+    <div class="center">
+        <div class="explainer"><span>Hover me</span></div>
+        <div class="text">残联管理界面</div>
+    </div>
+    <div class="right" onclick="location='charts.html'">
+        <div class="text">数据可视化展示</div>
+    </div>
+    <div class="righter" onclick="">
+        <div class="text">服务历史数据批量下载</div>
+    </div>
+</div>
+
+</body>
+</html>

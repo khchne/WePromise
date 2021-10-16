@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户申请</title>
+
+    <link href="../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"
+          rel="stylesheet"/>
+
+    <script type="text/javascript" src="../jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript"
+            src="../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <script src="https://kit.fontawesome.com/ced7379929.js" crossorigin="anonymous"></script>
+    <style>
+        .searchsty {
+            position: relative;
+            width: 500px;
+            height: 50px;
+            left: 45%;
+            top: -20px;
+            border: 1px solid #2ECCFA;
+            border-radius: 10px;
+            display: inline
+        }
+
+        .picsty {
+            width: 50px;
+            height: 50px;
+            left: 0px;
+            border: 1px solid #D5D5D5;
+            border-radius: 10px;
+            display: inline
+        }
+
+        .BTN {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            left: 50%;
+            top: -10px;
+            border: 0px solid #1C1C1C;
+            border-radius: 10px;
+            display: inline;
+            background-color: white
+        }
+    </style>
+    <script>
+        $(function () {
+            // alert("用户申请页面加载完毕");
+            showApply();
+            $("#submit-arrange").on("click", function () {
+                submitArrange();
+            })
+            $("#reject-arrange").on("click", function () {
+                rejectArrange();
+            })
+        })
+
+        function showApply() {
+            $.ajax({
+                url: "/wepromise/org/showAppliedService.do",
+                data: {
+                    "state": "已申请"
+                },
+                success: function (data) {
+                    var html = "";
+                    $.each(data, function (index, ele) {
+                        html += '<tr class="active" style="text-align:center">';
+                        html += '<td>' + ele.startTime + '</td>';
+                        html += '<td>' + index + 1 + '</td>';
+                        html += '<td>' + ele.service + '</td>';
+                        html += '<td><a style="text-decoration: none; cursor: pointer;" onClick="window.location.href=\'detail.html?id=' + ele.id + '\';">详情</a>';
+                        html += '</td>';
+                        html += '<td>' + ele.state + '</td>';
+                        html += '<td>';
+                        html += '<button onclick="acceptService(\'' + ele.id + '\')" type="button" data-toggle="modal" data-target="#accept">接受</button>';
+                        html += '</td>';
+                        html += '<td>';
+                        html += '<button onclick="rejectService(\'' + ele.id + '\')" type="button" data-toggle="modal" data-target="#reject">不接受</button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    })
+                    $("#historyBody").html(html);
+                }
+            })
+
+        }
+
+        function acceptService(id) {
+            // alert(id)
+            $("#accept-hidden").val(id)
+        }
+
+        function rejectService(id) {
+            $("#accept-hidden").val(id)
+        }
+
+        function submitArrange() {
+            $.ajax({
+                url: "/wepromise/org/acceptApply.do",
+                data: {
+                    "id": $("#accept-hidden").val(),
+                    "chargeName": $("#create-someone").val(),
+                    "chargePhone": $("#create-tel").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        alert("安排成功");
+                        showApply();
+                    } else {
+                        alert("安排失败");
+                    }
+                }
+            })
+
+        }
+
+        function rejectArrange() {
+            $.ajax({
+                url: "/wepromise/org/rejectApply.do",
+                data: {
+                    "id": $("#accept-hidden").val(),
+                    "reason": $("#reject-reason").val()
+                },
+                dataType: "json",
+                success: function () {
+                    alert("回复成功");
+                    showApply();
+                }
+            })
+        }
+
+    </script>
+</head>
+<body>
+<!--接受某申请后就分配人员-->
+<div class="modal fade" id="accept" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">接受该申请并分配人员</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="accept-hidden">
+                    <div class="form-group">
+                        <label for="create-someone" class="col-sm-2 control-label">负责人姓名<span
+                                style="font-size: 15px; color: red;">*</span></label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" id="create-someone" class="form-control" placeholder="请输入负责人姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-tel" class="col-sm-2 control-label">负责人电话<span
+                                style="font-size: 15px; color: red;">*</span></label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <!--								这个地方如何实现直接填入负责人的信息，可能需要写一个函数获取表格中的名字，可是这需要跟后端那边对接-->
+                            <input type="text" class="form-control" id="create-tel" placeholder="请输入负责人电话">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <button id="submit-arrange" type="button" class="btn btn-primary" data-dismiss="modal">
+                            通知用户和负责人
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--查看分配的人员-->
+<div class="modal fade" id="viewAcc" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel3">查看该服务的负责人</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label for="create-someone1" class="col-sm-2 control-label">负责人姓名<span
+                                style="font-size: 15px; color: red;">*</span></label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" id="create-someone1" class="form-control" value="yinbeiyu">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-tel1" class="col-sm-2 control-label">负责人电话<span
+                                style="font-size: 15px; color: red;">*</span></label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <!--								这个地方如何实现直接填入负责人的信息，可能需要写一个函数获取表格中的名字，可是这需要跟后端那边对接-->
+                            <input type="text" class="form-control" id="create-tel1" value="121212112">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default">修改负责人</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">确认</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--拒绝某个申请-->
+<div class="modal fade" id="reject" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">请给出不接受该申请的理由</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <!--							<label for="create-describe" class="col-sm-2 control-label"></label>-->
+                        <div class="col-sm-10" style="width: 81%;">
+                            <textarea class="form-control" rows="5" id="reject-reason"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <button id="reject-arrange" type="button" class="btn btn-primary" data-dismiss="modal">回复用户
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--查看拒绝某个申请的理由-->
+<div class="modal fade" id="viewRej" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">不接受该申请的理由</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <!--							<label for="create-describe" class="col-sm-2 control-label"></label>-->
+                        <div class="col-sm-10" style="width: 81%;">
+								<textarea class="form-control" rows="5" id="create-describe">
+                                    主要是太远啦太远啦太远啦太远啦太远啦....
+                                </textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">确认</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <div style="position: relative; left: 10px; top: -10px;">
+        <div class="page-header">
+            <i class="fas fa-fan fa-spin fa-3x"></i>
+            <span style="font-size:40px;font-weight:40px">用户申请</span>
+            <button style="position:relative;left:800px" onclick="location='Inipage1.html'"><span
+                    style="font-size:20px">返回用户首页</span></button>
+        </div>
+    </div>
+</div>
+
+
+<!--搜索结果（未搜索的话，默认按组织评分由高至低展示）-->
+<div style="position: relative;top: 10px;">
+    <table class="table table-hover" style="text-align:center">
+        <thead>
+        <tr style="color: #B3B3B3;">
+            <td>申请时间</td>
+            <td>用户ID</td>
+            <td>服务类型</td>
+            <td>具体需求</td>
+            <td>状态</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody id="historyBody">
+        <tr class="active">
+            <td>2021-10-17 12:05</td>
+            <td>111111</td>
+            <td>就业培训</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>未处理</td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#accept">接受</button>
+            </td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#reject">不接受</button>
+            </td>
+        </tr>
+        <tr class="active" style="text-align:center">
+            <td>2021-10-5 13:00</td>
+            <td>5565656</td>
+            <td>康复治疗</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>未处理</td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#accept">接受</button>
+            </td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#reject">不接受</button>
+            </td>
+        </tr>
+
+        <tr class="active">
+            <td>2021-10-2 13:00</td>
+            <td>55656598986</td>
+            <td>法律维权</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>未处理</td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#accept">接受</button>
+            </td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#reject">不接受</button>
+            </td>
+        </tr>
+        <tr class="active">
+            <td>2021-10-1 9:00</td>
+            <td>5565656</td>
+            <td>康复治疗</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>已接受</td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#viewAcc">查看人员安排</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr class="active">
+            <td>2021-10-1 14:00</td>
+            <td>556885656</td>
+            <td>生活照料</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>未接受</td>
+            <td></td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#viewRej">未接受理由查看</button>
+            </td>
+        </tr>
+        <tr class="active">
+            <td>2021-9-30 8:00</td>
+            <td>5565654446</td>
+            <td>法律维权</td>
+            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">详情</a>
+            </td>
+            <td>已接受</td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#viewAcc">查看人员安排</button>
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--记录翻页-->
+<div style="height: 50px; position: relative;top: 30px;">
+    <div>
+        <button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+    </div>
+    <div class="btn-group" style="position: relative;top: -34px; left: 110px;">
+        <button type="button" class="btn btn-default" style="cursor: default;">显示</button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                10
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">20</a></li>
+                <li><a href="#">30</a></li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
+    </div>
+    <div style="position: relative;top: -88px; left: 285px;">
+        <nav>
+            <ul class="pagination">
+                <li class="disabled"><a href="#">首页</a></li>
+                <li class="disabled"><a href="#">上一页</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">下一页</a></li>
+                <li class="disabled"><a href="#">末页</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

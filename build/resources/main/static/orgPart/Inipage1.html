@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>第三方组织界面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../css/Orglanrenzhijia.css" type="text/css" media="screen"/>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="../css/OrgstyleIE6.css" type="text/css" media="screen"/>
+    <![endif]-->
+    <link href="../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <style>
+        .overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #FFD306, #7AFEC6, #23a6d5, #EA7500);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 我的资料 -->
+<div class="modal fade" id="myInformation" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 30%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">我的资料</h4>
+            </div>
+            <div class="modal-body">
+                <div style="position: relative; left: 40px;">
+                    姓名：<b>某组织</b><br><br>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 修改密码的模态窗口 -->
+<div class="modal fade" id="editPwdModal" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="oldPwd" class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="oldPwd" style="width: 200%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPwd" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="newPwd" style="width: 200%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPwd" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10" style="width: 300px;">
+                            <input type="text" class="form-control" id="confirmPwd" style="width: 200%;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <!--					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='../login.html';">更新</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 退出系统的模态窗口 -->
+<div class="modal fade" id="exitModal" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 30%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">离开</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确定要退出系统吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div class="overlay"></div>
+    <!-- 顶部 -->
+    <div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;top:0px;position:absolute">
+        <div style="position: absolute; top: 0px; left: 5px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">
+            <a href="../StartPoint1.html">WePromise</a> <span
+                style="font-size:14px;color:white">Created by Team AndOne</span></div>
+        <div style="position: absolute; top: 15px; right: 15px;">
+            <ul>
+                <li class="dropdown user-dropdown">
+                    <a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle"
+                       data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>皇家研究院<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a>
+                        </li>
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span
+                                class="glyphicon glyphicon-file"></span> 我的资料</a></li>
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span
+                                class="glyphicon glyphicon-edit"></span> 修改密码</a></li>
+                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span
+                                class="glyphicon glyphicon-off"></span> 退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="menuWrapper" class="menuWrapper bg1" style="position:relative;top:20px">
+        <ul class="menu" id="menu">
+            <li class="bg1" style="background-position:0 0;">
+                <a id="bg1" href="application.html">用户申请</a>
+            </li>
+            <li class="bg1" style="background-position:-266px 0px;">
+                <a id="bg2" href="#">查询服务的历史记录</a>
+                <ul class="sub2" style="background-position:-266px 0;">
+                    <li><a href="checkHistory/Finished.html">已完成的服务列表</a></li>
+                    <li><a href="checkHistory/unFinished.html">未完成的服务列表</a></li>
+                </ul>
+            </li>
+            <li class="last bg1" style="background-position:-532px 0px;">
+                <a id="bg3" href="LearnMore.html">了解更多</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+<!-- The JavaScript -->
+<script type="text/javascript" src="http://www.lanrenzhijia.com/ajaxjs/1.5.2/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery.bgpos.js"></script>
+<script type="text/javascript">
+    $(function () {
+        <!--                 position of the <li> that is currently shown -->
+        var current = 0;
+
+        var loaded = 0;
+        for (var i = 1; i < 4; ++i)
+            $('<img />').load(function () {
+                ++loaded;
+                if (loaded == 3) {
+                    $('#bg1,#bg2,#bg3').mouseover(function (e) {
+                        var $this = $(this);
+
+                        if ($this.parent().index() == current)
+                            return;
+
+                        var item = e.target.id;
+
+                        if (item == 'bg1' || current == 2)
+                            $('#menu .sub' + parseInt(current + 1)).stop().animate({backgroundPosition: "(-266px 0)"}, 300, function () {
+                                $(this).find('li').hide();
+                            });
+                        else
+                            $('#menu .sub' + parseInt(current + 1)).stop().animate({backgroundPosition: "(266px 0)"}, 300, function () {
+                                $(this).find('li').hide();
+                            });
+
+                        if (item == 'bg1' || current == 2) {
+                            $('#menu > li').animate({backgroundPosition: "(-800px 0)"}, 0).removeClass('bg1 bg2 bg3').addClass(item);
+                            move(1, item);
+                        } else {
+                            $('#menu > li').animate({backgroundPosition: "(800px 0)"}, 0).removeClass('bg1 bg2 bg3').addClass(item);
+                            move(0, item);
+                        }
+
+                        if (current == 2 && item == 'bg1') {
+                            $('#menu .sub' + parseInt(current)).stop().animate({backgroundPosition: "(-266px 0)"}, 300);
+                        }
+                        if (current == 0 && item == 'bg3') {
+                            $('#menu .sub' + parseInt(current + 2)).stop().animate({backgroundPosition: "(266px 0)"}, 300);
+                        }
+                        current = $this.parent().index();
+                        $('#menu .sub' + parseInt(current + 1)).stop().animate({backgroundPosition: "(0 0)"}, 300, function () {
+                            $(this).find('li').fadeIn();
+                        });
+                    });
+                }
+            }).attr('src', '../image/' + i + '.jpg');
+
+        function move(dir, item) {
+            if (dir) {
+                $('#bg1').parent().stop().animate({backgroundPosition: "(0 0)"}, 200);
+                $('#bg2').parent().stop().animate({backgroundPosition: "(-266px 0)"}, 300);
+                $('#bg3').parent().stop().animate({backgroundPosition: "(-532px 0)"}, 400, function () {
+                    $('#menuWrapper').removeClass('bg1 bg2 bg3').addClass(item);
+                });
+            } else {
+                $('#bg1').parent().stop().animate({backgroundPosition: "(0 0)"}, 400, function () {
+                    $('#menuWrapper').removeClass('bg1 bg2 bg3').addClass(item);
+                });
+                $('#bg2').parent().stop().animate({backgroundPosition: "(-266px 0)"}, 300);
+                $('#bg3').parent().stop().animate({backgroundPosition: "(-532px 0)"}, 200);
+            }
+        }
+    });
+</script>
+</body>
+</html>

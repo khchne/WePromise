@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WePromise服务系统</title>
+    <style>
+        a {
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: none
+        }
+
+        .Portstyle {
+            position: relative;
+            height: 60px;
+            left: 30px;
+            width: 250px;
+            background-color: #CAFFFF;
+            border: 1px solid #D5D5D5;
+            border-radius: 10px
+        }
+
+        .Coin {
+            height: 60px;
+            width: 60px;
+            float: left
+        }
+
+        .Intro {
+            position: absolute;
+            height: 400px;
+            width: 200px;
+            top: 100px;
+            left: 20px;
+            border: 1px solid #D5D5D5;
+            border-radius: 10px;
+            word-wrap: break-word
+        }
+    </style>
+</head>
+<body>
+<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
+    <div style="position: absolute; top: 10px; left: 5px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">
+        WePromise <span style="font-size:14px;color:white">Created by Team AndOne</span></div>
+</div>
+<div id="prointro" class="Intro" style="top:100px;left=600px;float:left">
+    <h1 style="font-style:oblique;font-family:Georgia">Something About WePromise</h1>
+    我们产品的创意来源于生活......
+</div>
+<div id="Allport"
+     style="position:absolute;top:100px;left:700px;float:left;height:400px;width:400px;background-color:rgb(255,255,255,0.1);border:1px solid #D5D5D5">
+    <div align="center" id="Userport" class="Portstyle" style="top:5%">
+        <a href="loginSet/Userlogin.html">
+            <img src="image/userimage.jpeg" class="Coin">
+            <h4>残疾人用户登录入口</h4>
+        </a>
+    </div>
+    <div align="center" id="Unionport" class="Portstyle" style="top:25%">
+        <a href="loginSet/Unionlogin.html">
+            <img src="image/unioni.jpeg" class="Coin">
+            <h4>残联登录入口</h4>
+        </a>
+    </div>
+    <div align="center" id="Orgport" class="Portstyle" style="top:45%">
+        <a href="loginSet/Orglogin.html">
+            <img src="image/orgimage.jpeg" class="Coin">
+            <h4>第三方机构登录入口</h4>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

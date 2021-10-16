@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>组织已接受但未完成的服务记录</title>
+
+    <link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"
+          rel="stylesheet"/>
+
+    <script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript"
+            src="../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <script src="https://kit.fontawesome.com/ced7379929.js" crossorigin="anonymous"></script>
+    <style>
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+        .rating > span {
+            display: inline-block;
+            position: relative;
+            width: 1.1em;
+        }
+
+        .rating > span:hover:before,
+        .rating > span:hover ~ span:before {
+            content: "\2605";
+            position: absolute;
+        }
+    </style>
+    <script>
+        $(function () {
+            // alert("未完成的服务历史记录 页面加载完成");
+            $.ajax({
+                url: "/wepromise/user/getHistory",
+                data: {
+                    "state": "已申请"
+                },
+                dataType: "json",
+                success: function (data) {
+                    /*var name = "暂未安排"
+                    if (ele.chargeName !== null) {
+                        name = ele.chargeName
+                    }
+                    var phone = "暂未安排"
+                    if (ele.chargePhone !== null) {
+                        phone = ele.chargePhone;
+                    }*/
+                    var html = "";
+                    $.each(data, function (index, ele) {
+                        html += '<tr class="active">';
+                        html += '<td>' + ele.startTime + '</td>';
+                        html += '<td>' + ele.service + '</td>';
+                        html += '<td>' + ele.orgId + '</td>';
+                        html += '<td>暂未安排</td>';
+                        html += '<td>暂未安排</td>';
+                        html += '<td>';
+                        html += '<button type="button" data-target="#gradeService" onclick="commentService(\'' + ele.id + '\')"><i class="fas fa-comments"></i>';
+                        html += '</button>';
+                        html += '</td>';
+                        html += '</tr>';
+                    })
+                    $("#historyBody").html(html);
+                }
+            })
+        })
+
+        function commentService(id) {
+            // alert(id);
+            $("#gradeService").modal("show");
+            $.ajax({
+                url: "/wepromise/comm.do",
+                data: {
+                    "id": id,
+                    "sco": 10,
+                    "comment": $("#create-describe").val()
+                },
+                success: function () {
+                    alert("评论成功");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+
+<!--评分-->
+<div class="modal fade" id="gradeService" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <i class="far fa-smile-wink fa-spin fa-3x"></i>
+                <div style="font-size:40px;font-weight:40px;position:relative;left:0px;top:0px">为这次的服务打个分吧</div>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label for="create-marketActivityOwner" class="col-sm-2 control-label">您为本次服务打分为</label>
+                        <div style="width: 400px;" style="">
+                            <div class="rating" id="create-marketActivityOwner" style="font-size:30px">
+                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="left:20px;position:relative">
+                        <h4 class="modal-title" id="myModalLabel2">如果您有别的建议和想法，欢迎在此评论</h4>
+                        <div class="col-sm-10" style="width: 81%;top:10px">
+								<textarea class="form-control" rows="3" id="create-describe">
+                                畅所欲言！只要是与提高服务质量有关的话题，我们承诺都将进行反馈！
+                                </textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">提交</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--标题-->
+<div>
+    <div style="position: relative; left: 10px; top: -10px;">
+        <div class="page-header">
+            <i class="fas fa-cog fa-spin fa-3x"></i>
+            <span style="font-size:40px;font-weight:40px">未完成的服务历史记录</span>
+            <button style="position:relative;left:700px" onclick="location='../Inipage.html'"><span
+                    style="font-size:20px">返回用户首页</span></button>
+        </div>
+    </div>
+</div>
+
+<!--记录列表-->
+<div style="position:relative;top:10px">
+    <table class="table table-hover" style="text-align:center">
+        <thead>
+        <tr style="color: #B3B3B3;">
+            <td>服务时间</td>
+            <td>服务类型</td>
+            <td>组织名称</td>
+            <td>负责人姓名</td>
+            <td>负责人电话</td>
+            <td>评价该服务</td>
+        </tr>
+        </thead>
+        <tbody id="historyBody">
+        <tr class="active">
+            <td>2021-10-1</td>
+            <td>康复治疗</td>
+            <td>第一家康复治疗组织</td>
+            <td>尹bei煜</td>
+            <td>123456789</td>
+            <td>
+                <button type="button" data-target="#gradeService" data-toggle="modal"><i class="fas fa-comments"></i>
+                </button>
+            </td>
+        </tr>
+        <tr class="active">
+            <td>2021-7-8</td>
+            <td>生活照料</td>
+            <td>第二家生活照料组织</td>
+            <td>何ji荣</td>
+            <td>1212121212</td>
+            <td>
+                <button type="button" data-target="#gradeService" data-toggle="modal"><i class="fas fa-comments"></i>
+                </button>
+            </td>
+        </tr>
+
+        <tr class="active">
+            <td>2021-1-1</td>
+            <td>生活照料</td>
+            <td>第三家生活照料组织</td>
+            <td>陈kei华</td>
+            <td>5656565656</td>
+            <td>
+                <button type="button" data-target="#gradeService" data-toggle="modal"><i class="fas fa-comments"></i>
+                </button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<!--记录翻页-->
+<div style="height: 50px; position: relative;top: 30px;">
+    <div>
+        <button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+    </div>
+    <div class="btn-group" style="position: relative;top: -34px; left: 110px;">
+        <button type="button" class="btn btn-default" style="cursor: default;">显示</button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                10
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">20</a></li>
+                <li><a href="#">30</a></li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
+    </div>
+    <div style="position: relative;top: -88px; left: 285px;">
+        <nav>
+            <ul class="pagination">
+                <li class="disabled"><a href="#">首页</a></li>
+                <li class="disabled"><a href="#">上一页</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">下一页</a></li>
+                <li class="disabled"><a href="#">末页</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+</body>
+

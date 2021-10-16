@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>组织未接受的服务记录</title>
+
+    <link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script src="https://kit.fontawesome.com/ced7379929.js" crossorigin="anonymous"></script>
+
+<body>
+<div class="modal fade" id="explainWhy" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">具体需求</h4>
+				</div>
+				<div class="modal-body">
+
+					<form class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<label for="create-marketActivityOwner" class="col-sm-2 control-label">服务时间<span style="font-size: 15px; color: red;">*</span></label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" id="create-marketActivityOwner" class="form-control" disabled="disabled" value="2020-10-10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="create-marketActivityName" class="col-sm-2 control-label">服务地点<span style="font-size: 15px; color: red;">*</span></label>
+                            <div class="col-sm-10" style="width: 300px;">
+<!--								这个地方如何实现直接填入组织名称，可能需要写一个函数获取表格中的名字，可是这需要跟后端那边对接-->
+                                <input type="text" class="form-control" id="create-marketActivityName" value="深圳大学" disabled="disabled">
+                            </div>
+						</div>
+						<div class="form-group">
+							<label for="create-startTime" class="col-sm-2 control-label">服务详细信息</label>
+							<div class="col-sm-10"  id="create-startTime"   style="width: 300px;">
+<!--								<input type="datetime-local" class="form-control" id="create-startTime">-->
+                                需要专门的服务，想出门购物，但家人都有事，所以想申请组织的帮助...
+							</div>
+<!--							<label for="create-endTime" class="col-sm-2 control-label">结束日期</label>-->
+<!--							<div class="col-sm-10" style="width: 300px;">-->
+<!--								<input type="text" class="form-control" id="create-endTime">-->
+<!--							</div>-->
+						</div>
+                        <div class="form-group" style="left:20px;position:relative">
+					        <h4 class="modal-title" id="myModalLabel2">组织回复</h4>
+                            <div class="col-sm-10" style="width: 81%;top:10px">
+								<textarea class="form-control" rows="3" id="create-describe">
+                                由于您申请服务的地点已经超出我们的服务范围，所以请您重新寻找别的组织的帮助...
+                                </textarea>
+							</div>
+				        </div>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+<!--标题-->
+    <div>
+		<div style="position: relative; left: 10px; top: -10px;">
+			<div class="page-header">
+                <i class="fas fa-frown fa-3x"></i>
+				<span style="font-size:40px;font-weight:40px">未被组织接受的服务历史记录</span>
+			</div>
+		</div>
+	</div>
+
+<!--记录列表-->
+<div style="position:relative;top:10px">
+    <table class="table table-hover" style="text-align:center">
+					<thead>
+						<tr style="color: #B3B3B3;">
+							<td>申请时间</td>
+                            <td>服务类型</td>
+							<td>组织名称</td>
+                            <td>未接受原因</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="active">
+							<td>2021-10-1</td>
+                            <td>康复治疗</td>
+                            <td>第二家康复治疗组织</td>
+                            <td><button type="button" data-target="#explainWhy" data-toggle="modal"><i class="fas fa-question"></i></button> </td>
+						</tr>
+                        <tr class="active">
+                            <td>2021-7-8</td>
+                            <td>法律维权</td>
+                            <td>第三家法律维权组织</td>
+                            <td><button type="button"data-target="#explainWhy" data-toggle="modal"><i class="fas fa-question"></i></button></td>
+                        </tr>
+<!--						<tr class="active">-->
+<!--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detailC.html';">第三家康复组织</a></td>-->
+<!--                            <td>3.7</td>-->
+<!--                            <td><button type="button"data-toggle="modal" data-target="#demandModal"><i class="fas fa-paper-plane"></i></button></td>-->
+<!--                        </tr>-->
+                        <tr class="active">
+                            <td>2021-1-1</td>
+                            <td>生活照料</td>
+                            <td>第三家生活照料组织</td>
+                            <td><button type="button"data-target="#explainWhy" data-toggle="modal"><i class="fas fa-question"></i></button></td>
+                        </tr>
+					</tbody>
+				</table>
+</div>
+
+<!--记录翻页-->
+<div style="height: 50px; position: relative;top: 30px;">
+				<div>
+					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+				</div>
+				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
+					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							10
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">20</a></li>
+							<li><a href="#">30</a></li>
+						</ul>
+					</div>
+					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
+				</div>
+				<div style="position: relative;top: -88px; left: 285px;">
+					<nav>
+						<ul class="pagination">
+							<li class="disabled"><a href="#">首页</a></li>
+							<li class="disabled"><a href="#">上一页</a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">下一页</a></li>
+							<li class="disabled"><a href="#">末页</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+</body>
+

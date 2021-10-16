@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<link href="../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+    <style>
+		.searchsty{
+		position:relative;
+		width:500px;
+		height:50px;
+		left:45%;
+		top:-20px;
+		border:1px solid #2ECCFA;
+		border-radius:10px;
+		display:inline
+	}
+	.picsty{
+		width:50px;
+		height:50px;
+		left:0px;
+		border:1px solid #D5D5D5;
+		border-radius:10px;
+		display:inline
+	}
+	.BTN{
+		position:relative;
+		width:50px;
+		height:50px;
+		left:50%;
+		top:-10px;
+		border:0px solid #1C1C1C;
+		border-radius:10px;
+		display:inline;
+		background-color:white
+	}
+	</style>
+	<script src="https://kit.fontawesome.com/ced7379929.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<!-- 残疾人注册的模态窗口 -->
+	<div class="modal fade" id="createNewDisabled" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">残障人士注册</h4>
+				</div>
+				<div class="modal-body">
+
+					<form class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<label for="create-Owner" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
+							<div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-Owner">
+                            </div>
+                            <label for="create-marketActivityName" class="col-sm-2 control-label">身份证号<span style="font-size: 15px; color: red;">*</span></label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-marketActivityName">
+                            </div>
+						</div>
+
+						<div class="form-group">
+							<label for="create-startTime" class="col-sm-2 control-label">联系方式</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="create-startTime">
+							</div>
+							<label for="create-endTime" class="col-sm-2 control-label">残疾人证号</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="create-endTime">
+							</div>
+						</div>
+                        <div class="form-group">
+
+                            <label for="create-cost" class="col-sm-2 control-label">监护人姓名</label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-cost">
+                            </div>
+							<label for="create-tel" class="col-sm-2 control-label">监护人联系方式</label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-tel">
+                            </div>
+                        </div>
+
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">添加</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 残疾人信息改动的模态窗口 -->
+	<div class="modal fade" id="editDisabled" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel2">残疾人信息更新</h4>
+				</div>
+				<div class="modal-body">
+
+					<form class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<label for="create-Owner1" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;"></span></label>
+							<div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-Owner1" value="某某某">
+                            </div>
+                            <label for="create-marketActivityName1" class="col-sm-2 control-label">身份证号<span style="font-size: 15px; color: red;"></span></label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-marketActivityName1" value="4545444545445">
+                            </div>
+						</div>
+
+						<div class="form-group">
+							<label for="create-t" class="col-sm-2 control-label">联系方式</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="create-t"value="12345678">
+							</div>
+							<label for="create-cid" class="col-sm-2 control-label">残疾人证号</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="create-cid" value="45454547878">
+							</div>
+						</div>
+                        <div class="form-group">
+
+                            <label for="createjname" class="col-sm-2 control-label">监护人姓名</label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="createjname" value="王五">
+                            </div>
+							<label for="create-tel1" class="col-sm-2 control-label">监护人联系方式</label>
+                            <div class="col-sm-10" style="width: 300px;">
+                                <input type="text" class="form-control" id="create-tel1" value="548745127">
+                            </div>
+                        </div>
+
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--删除选中的残疾人记录-->
+
+	<div class="modal fade" id="cancelDisabled" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div>
+					<i class="fas fa-exclamation-triangle fa-3x"></i>
+					<span style="font-size:40px;font-weight:40px">确认删除这些记录吗？</span>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">确认删除</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div>
+		<div style="position: relative; left: 10px; top: -10px;">
+			<div class="page-header">
+				<i class="fas fa-blind fa-3x"></i>
+				<span style="font-size:40px;font-weight:40px">残疾人信息管理</span>
+				<button style="position:relative;left:800px"onclick="location='Inipage1.html'"><span style="font-size:20px">返回残联首页</span></button>
+			</div>
+		</div>
+	</div>
+	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+
+
+			<!--    查询框-->
+			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
+						<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
+
+						  <div class="form-group">
+							<div class="input-group" style="margin:10px;text-align:center">
+								<input class="searchsty"  type="text" placeholder="请输入残疾人相关信息">
+								<button class="BTN" type="submit"><i class="fas fa-search fa-3x"></i></button>
+							</div>
+						  </div>
+						</form>
+			</div>
+			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+				<div class="btn-group" style="position: relative; top: 18%;">
+				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewDisabled"><span class="glyphicon glyphicon-plus"></span>添加</button>
+				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editDisabled"><span class="glyphicon glyphicon-pencil"></span>修改</button>
+				  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelDisabled"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				</div>
+
+			</div>
+			<div style="position: relative;top: 10px;">
+				<table class="table table-hover">
+					<thead>
+						<tr style="color: #B3B3B3;">
+							<td></td>
+							<td>姓名</td>
+                            <td>残疾类型</td>
+							<td>残疾程度</td>
+							<td>联系方式</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="active">
+							<td><input type="checkbox" /></td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='userDetail.html';">张三</a></td>
+                            <td>视力残疾</td>
+							<td>三级</td>
+							<td>12121111</td>
+						</tr>
+                        <tr class="active">
+                            <td><input type="checkbox" /></td>
+                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='userDetail.html';">李四</a></td>
+                            <td>听力残疾</td>
+                            <td>一级</td>
+							<td>4545445445</td>
+                        </tr>
+					</tbody>
+				</table>
+			</div>
+<!--			记录翻页-->
+			<div style="height: 50px; position: relative;top: 30px;">
+				<div>
+					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+				</div>
+				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
+					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							10
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">20</a></li>
+							<li><a href="#">30</a></li>
+						</ul>
+					</div>
+					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
+				</div>
+				<div style="position: relative;top: -88px; left: 285px;">
+					<nav>
+						<ul class="pagination">
+							<li class="disabled"><a href="#">首页</a></li>
+							<li class="disabled"><a href="#">上一页</a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">下一页</a></li>
+							<li class="disabled"><a href="#">末页</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>
